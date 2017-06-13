@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1.html</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap-extend.min.css">
+    <style type="text/css">
+        div.testdiv{
+            height:200px;
+            width:200px;
+            background: #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-lg-12">
+                <table class="table table-border col-lg-12">
+                    <tr>
+                        <th>name</th>
+                        <th>age</th>
+                        <th>tip</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>22</td>
+                        <td>33</td>
+                    </tr>
+                    <tr>
+                        <td>111</td>
+                        <td>222</td>
+                        <td>333</td>
+                    </tr>
+                    <tr>
+                        <td>1111</td>
+                        <td>2222</td>
+                        <td>3333</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="jquery.js"></script>
+    <script src="bootstrap.js"></script>
+    <script type="text/javascript">
+        $("td").on("click", function(e){
+            
+        });
+        $.fn.testfun = function(){
+            $(this).on("click", function(e){
+                var __this = this;
+                var pageX = __this.offsetLeft+ 8 + "px";
+                var pageY = (__this.offsetTop + __this.offsetHeight) + "px";
+                var divEle = $('<div class="testdiv"></div>');
+                $(divEle).css({
+                    "position": "absolute",
+                    "left": pageX,
+                    "top": pageY
+                });    
+                $("body").append(divEle);
+            });
+        }
+        $("td").testfun();
+    </script>
+</body>
+</html>
