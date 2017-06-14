@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>1.html</title>
-    <link rel="stylesheet" href="bootstrap.min.css">
-    <link rel="stylesheet" href="bootstrap-extend.min.css">
+    <link rel="stylesheet" href="lib/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="lib/bootstrap/bootstrap-extend.css">
     <style type="text/css">
         div.testdiv{
             height:200px;
@@ -48,26 +48,10 @@
         </div>
     </div>
 
-    <script src="jquery.js"></script>
-    <script src="bootstrap.js"></script>
+    <script src="lib/jquery/jquery.js"></script>
+    <script src="lib/bootstrap/bootstrap.js"></script>
+    <script src="dist/jquery-tdformselect.js"></script>
     <script type="text/javascript">
-        $("td").on("click", function(e){
-            
-        });
-        $.fn.testfun = function(){
-            $(this).on("click", function(e){
-                var __this = this;
-                var pageX = __this.offsetLeft+ 8 + "px";
-                var pageY = (__this.offsetTop + __this.offsetHeight) + "px";
-                var divEle = $('<div class="testdiv"></div>');
-                $(divEle).css({
-                    "position": "absolute",
-                    "left": pageX,
-                    "top": pageY
-                });    
-                $("body").append(divEle);
-            });
-        }
         $("td").testfun();
     </script>
 </body>
