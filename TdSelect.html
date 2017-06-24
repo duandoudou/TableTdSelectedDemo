@@ -24,24 +24,9 @@
                         <th>tip</th>
                     </tr>
                     <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>11</td>
-                        <td>22</td>
-                        <td>33</td>
-                    </tr>
-                    <tr>
-                        <td>111</td>
-                        <td>222</td>
-                        <td>333</td>
-                    </tr>
-                    <tr>
-                        <td>1111</td>
-                        <td>2222</td>
-                        <td>3333</td>
+                        <td data-select="windows,linux,macos,andriod,others">windows</td>
+                        <td data-select="tomcat,apache,netty,ant">tomcat</td>
+                        <td data-select="java,python,nodejs,c,php">java</td>
                     </tr>
                 </table>
             </div>
@@ -50,9 +35,69 @@
 
     <script src="lib/jquery/jquery.js"></script>
     <script src="lib/bootstrap/bootstrap.js"></script>
-    <script src="dist/jquery-tdformselect.js"></script>
     <script type="text/javascript">
-        $("td").testfun();
+        $("tr td").on('dblclick', function(){
+            //切换当前TD为input
+            changeTdToInput(this);
+            //构建div
+            var selectdiv = createShowDiv(this);
+            //绑定事件
+            createClickEvent(selectdiv);
+            //绑定checkbox
+
+        });
+
+        function changeTdToInput(__td){
+            var __this = __td;
+            var value = $(__this).html();
+            var input = $('<input type="text" disabled value="'+value+'" />');
+            $(__this).html(input);
+        }
+
+        function createShowDiv(__td){
+            var __this = __td;
+            //构建DIV
+            var pageX = __this.offsetLeft + 8 + "px";
+            var pageY = (__this.offsetTop + __this.offsetHeight) + "px";
+            var __selectdiv__ = $('<div class="td-select-form"></div>');
+            $(__selectdiv__).css({
+                "position": "absolute",
+                "left": pageX,
+                "top": pageY,
+                "width": "300px",
+                "height": "400px",
+                "background-color": "#ff7400"
+            });
+
+            //添加数据
+            var data = $(__this).attr("data-select");
+            if(!data){
+                return;
+            }
+            var datalist = data.split(",");
+            for(var i=0;i<datalist.length;i++){
+                var currval = datalist[i];
+                var div = $('<div class="select-row"></div>')
+                var checkbox = $('<input type="checkbox" select-val="'+currval+'" />');
+                var span = $('<span>'+currval+'</span>');
+
+                $(div).append(checkbox).append(span);
+                $(__selectdiv__).append(div);
+            }
+            $("body").append(__selectdiv__);
+            return __selectdiv__;
+        }
+
+        function createClickEvent(selectdiv){
+            //事件绑定
+            $(selectdiv).on('click', function(e){
+                e.stopPropagation();
+            });
+            //添加全局事件，监听是否去掉窗口
+            $(document).on('click', function(e){
+                $(selectdiv).remove();
+            });
+        }
     </script>
 </body>
 </html>

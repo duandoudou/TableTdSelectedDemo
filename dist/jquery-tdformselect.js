@@ -22,7 +22,10 @@
         $(__selectdiv__).css({
             "position": "absolute",
             "left": pageX,
-            "top": pageY
+            "top": pageY,
+            "width": "400px",
+            "height": "600px",
+            "background-color": "#ff7400"
         });
         $("body").append(__selectdiv__);
     };
