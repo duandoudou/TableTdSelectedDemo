@@ -33,6 +33,11 @@
         </div>
     </div>
 
+
+
+
+
+
     <script src="lib/jquery/jquery.js"></script>
     <script src="lib/bootstrap/bootstrap.js"></script>
     <script type="text/javascript">
@@ -42,9 +47,9 @@
             //构建div
             var selectdiv = createShowDiv(this);
             //绑定事件
-            createClickEvent(selectdiv);
+            createClickEvent(selectdiv, this);
             //绑定checkbox
-
+            createCheckboxClick(selectdiv, this);
         });
 
         function changeTdToInput(__td){
@@ -88,14 +93,33 @@
             return __selectdiv__;
         }
 
-        function createClickEvent(selectdiv){
+        function createClickEvent(selectdiv, __td){
             //事件绑定
             $(selectdiv).on('click', function(e){
                 e.stopPropagation();
             });
             //添加全局事件，监听是否去掉窗口
             $(document).on('click', function(e){
+                var input = $(__td).find("input");
+                $(__td).html($(input).val()); 
+                $(__td).attr("title", $(input).val());
                 $(selectdiv).remove();
+            });
+        }
+        function createCheckboxClick(selectdiv, __td){
+            $(selectdiv).on("click", "input[type='checkbox']", function(){
+                var checkboxlist = $(selectdiv).find('input[type="checkbox"]');
+                var value = "";
+                for(var i=0;i<checkboxlist.length;i++){
+                    var currbox = checkboxlist[i];
+                    if($(currbox).is(':checked')){
+                        value += value ? "," : "";
+                        value += $(currbox).attr("select-val");
+                    }
+                }
+                var input = $(__td).find('input');
+                $(input).val(value);
+                $(input).attr("title", value);
             });
         }
     </script>
