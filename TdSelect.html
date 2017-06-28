@@ -16,112 +16,53 @@
 <body>
     <div class="row">
         <div class="col-lg-12">
-            <div class="col-lg-12">
-                <table class="table table-border col-lg-12">
-                    <tr>
-                        <th>name</th>
-                        <th>age</th>
-                        <th>tip</th>
-                    </tr>
-                    <tr>
-                        <td data-select="windows,linux,macos,andriod,others">windows</td>
-                        <td data-select="tomcat,apache,netty,ant">tomcat</td>
-                        <td data-select="java,python,nodejs,c,php">java</td>
-                    </tr>
-                </table>
+            <div class="panel-body container-fluid padding-top-0 padding-bottom-0">
+                <div class="form-horizontal">
+                    <div class="padding-10 padding-top-0 padding-bottom-0">
+                        <table class="table table-hover table-bordered dataTable table-striped width-full" id="eventsettable">
+                            <thead class="bg-blue-grey-100">
+                                <tr>
+                                    <th width="33%">类型</th>
+                                    <th width="33%">名称</th>
+                                    <th width="*">描述</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-select="windows,linux,macos,andriod,others">windows</td>
+                                    <td data-select="tomcat,apache,netty,ant">tomcat</td>
+                                    <td data-select="java,python,nodejs,C,php">java</td>
+                                </tr>
+                                <tr>
+                                    <td data-select="windows,linux,macos,andriod,others">windows</td>
+                                    <td data-select="tomcat,apache,netty,ant">tomcat</td>
+                                    <td data-select="java,python,nodejs,C,php">java</td>
+                                </tr>
+                                <tr>
+                                    <td data-select="windows,linux,macos,andriod,others">windows</td>
+                                    <td data-select="tomcat,apache,netty,ant">tomcat</td>
+                                    <td data-select="java,python,nodejs,C,php">java</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-
-
-
-
-
     <script src="lib/jquery/jquery.js"></script>
     <script src="lib/bootstrap/bootstrap.js"></script>
+    <script type="text/javascript" src="dist/jquery-tdformselect.js"></script>
     <script type="text/javascript">
-        $("tr td").on('dblclick', function(){
-            //切换当前TD为input
-            changeTdToInput(this);
-            //构建div
-            var selectdiv = createShowDiv(this);
-            //绑定事件
-            createClickEvent(selectdiv, this);
-            //绑定checkbox
-            createCheckboxClick(selectdiv, this);
-        });
-
-        function changeTdToInput(__td){
-            var __this = __td;
-            var value = $(__this).html();
-            var input = $('<input type="text" disabled value="'+value+'" />');
-            $(__this).html(input);
-        }
-
-        function createShowDiv(__td){
-            var __this = __td;
-            //构建DIV
-            var pageX = __this.offsetLeft + 8 + "px";
-            var pageY = (__this.offsetTop + __this.offsetHeight) + "px";
-            var __selectdiv__ = $('<div class="td-select-form"></div>');
-            $(__selectdiv__).css({
-                "position": "absolute",
-                "left": pageX,
-                "top": pageY,
-                "width": "300px",
-                "height": "400px",
-                "background-color": "#ff7400"
-            });
-
-            //添加数据
-            var data = $(__this).attr("data-select");
-            if(!data){
-                return;
-            }
-            var datalist = data.split(",");
-            for(var i=0;i<datalist.length;i++){
-                var currval = datalist[i];
-                var div = $('<div class="select-row"></div>')
-                var checkbox = $('<input type="checkbox" select-val="'+currval+'" />');
-                var span = $('<span>'+currval+'</span>');
-
-                $(div).append(checkbox).append(span);
-                $(__selectdiv__).append(div);
-            }
-            $("body").append(__selectdiv__);
-            return __selectdiv__;
-        }
-
-        function createClickEvent(selectdiv, __td){
-            //事件绑定
-            $(selectdiv).on('click', function(e){
-                e.stopPropagation();
-            });
-            //添加全局事件，监听是否去掉窗口
-            $(document).on('click', function(e){
-                var input = $(__td).find("input");
-                $(__td).html($(input).val());
-                $(__td).attr("title", $(input).val());
-                $(selectdiv).remove();
-            });
-        }
-        function createCheckboxClick(selectdiv, __td){
-            $(selectdiv).on("click", "input[type='checkbox']", function(){
-                var checkboxlist = $(selectdiv).find('input[type="checkbox"]');
-                var value = "";
-                for(var i=0;i<checkboxlist.length;i++){
-                    var currbox = checkboxlist[i];
-                    if($(currbox).is(':checked')){
-                        value += value ? "," : "";
-                        value += $(currbox).attr("select-val");
-                    }
+        $("#eventsettable tr td").on('dblclick', function(){
+            $(this).tdFormSelect({
+                tdallownull: false,
+                onclosefun : function(td){
+                    showWAFSuccessAlert($(td).html());
                 }
-                var input = $(__td).find('input');
-                $(input).val(value);
-                $(input).attr("title", value);
             });
-        }
+        });
     </script>
 </body>
 </html>
