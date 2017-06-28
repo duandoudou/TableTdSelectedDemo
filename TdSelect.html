@@ -101,7 +101,7 @@
             //添加全局事件，监听是否去掉窗口
             $(document).on('click', function(e){
                 var input = $(__td).find("input");
-                $(__td).html($(input).val()); 
+                $(__td).html($(input).val());
                 $(__td).attr("title", $(input).val());
                 $(selectdiv).remove();
             });
